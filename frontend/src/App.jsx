@@ -1,15 +1,13 @@
-import React from 'react'
-
-import './App.css'
-import './styles/theme.css'
+import TopNav from './components/TopNav'
 import AppRoutes from './routes/AppRoutes'
 
 function App() {
-
-
   return (
     <>
-      <AppRoutes />
+      <TopNav />
+      <div style={{ paddingTop: '65px', paddingBottom: '70px' }}>
+        <AppRoutes />
+      </div>
     </>
   )
 }

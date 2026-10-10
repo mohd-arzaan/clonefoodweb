@@ -1,0 +1,36 @@
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55px;
+  background: #000;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 999;
+}
+
+.top-nav__logo {
+  color: #ff4757;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.top-nav__links {
+  display: flex;
+  gap: 15px;
+}
+
+.top-nav__links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.top-nav__links a:hover {
+  color: #ff4757;
+}
