@@ -4,66 +4,112 @@
   left: 0;
   right: 0;
   height: 60px;
-  background: rgba(15, 15, 18, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 18px;
   z-index: 950;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .top-nav__logo {
-  color: #fff;
-  font-size: 19px;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 800;
   text-decoration: none;
   white-space: nowrap;
-  letter-spacing: -0.3px;
-  background: linear-gradient(135deg, #ff4757, #ff6b81);
+  letter-spacing: -0.4px;
+  background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.top-nav__logo:hover {
+  opacity: 0.85;
 }
 
 .top-nav__links {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
 .top-nav__links a {
-  color: #bbb;
+  color: #a0a0a8;
   text-decoration: none;
   font-size: 12.5px;
-  padding: 7px 12px;
-  border-radius: 8px;
+  font-weight: 500;
+  padding: 7px 13px;
+  border-radius: 10px;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid transparent;
+  letter-spacing: 0.1px;
+  background: transparent;
 }
 
 .top-nav__links a:hover {
   color: #fff;
-  background: rgba(255, 71, 87, 0.15);
-  border-color: rgba(255, 71, 87, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
+.top-nav__links a:active {
+  transform: scale(0.97);
+}
+
+/* Last link (Partner Login) ko highlight karo */
+.top-nav__links a:last-child {
+  background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(255, 71, 87, 0.35);
+  border-color: transparent;
+}
+
+.top-nav__links a:last-child:hover {
+  box-shadow: 0 4px 16px rgba(255, 71, 87, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Mobile */
 @media (max-width: 500px) {
   .top-nav {
     padding: 0 12px;
     height: 55px;
   }
+
   .top-nav__logo {
     font-size: 15px;
+    gap: 6px;
   }
+
+  .top-nav__links {
+    gap: 3px;
+  }
+
   .top-nav__links a {
     font-size: 10.5px;
-    padding: 6px 8px;
+    padding: 6px 9px;
+    border-radius: 8px;
   }
-  .top-nav__links {
-    gap: 4px;
+}
+
+/* Very small screens */
+@media (max-width: 380px) {
+  .top-nav__links a {
+    font-size: 9.5px;
+    padding: 5px 7px;
+  }
+  .top-nav__logo {
+    font-size: 13px;
   }
 }

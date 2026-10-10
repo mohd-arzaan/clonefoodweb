@@ -33,7 +33,7 @@ const BottomNav = () => {
 
   const handleUserLogout = async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true })
+      await axios.get("http://localhost:3000/api/auth/user/logout", { withCredentials: true })
       setUser(null)
       navigate('/user/login')
     } catch (err) { console.log(err) }
@@ -41,7 +41,7 @@ const BottomNav = () => {
 
   const handlePartnerLogout = async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/partner/logout", {}, { withCredentials: true })
+      await axios.get("http://localhost:3000/api/auth/food-partner/logout", { withCredentials: true })
       setPartner(null)
       navigate('/food-partner/login')
     } catch (err) { console.log(err) }

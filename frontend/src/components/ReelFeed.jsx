@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import CommentSection from './CommentSection'
 
-// Reusable feed for vertical reels
-// Props:
-// - items: Array of video items { _id, video, description, likeCount, savesCount, commentsCount, comments, foodPartner }
-// - onLike: (item) => void | Promise<void>
-// - onSave: (item) => void | Promise<void>
-// - emptyMessage: string
 const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' }) => {
   const videoRefs = useRef(new Map())
+  const [openCommentsFor, setOpenCommentsFor] = useState(null)
+  const [localItems, setLocalItems] = useState(items)
+
+  useEffect(() => {
+    setLocalItems(items)
+  }, [items])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -17,7 +18,7 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
           const video = entry.target
           if (!(video instanceof HTMLVideoElement)) return
           if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-            video.play().catch(() => { /* ignore autoplay errors */ })
+            video.play().catch(() => {})
           } else {
             video.pause()
           }
@@ -28,23 +29,33 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
 
     videoRefs.current.forEach((vid) => observer.observe(vid))
     return () => observer.disconnect()
-  }, [items])
+  }, [localItems])
 
   const setVideoRef = (id) => (el) => {
     if (!el) { videoRefs.current.delete(id); return }
     videoRefs.current.set(id, el)
   }
 
+  const handleCommentAdded = (foodId) => {
+    setLocalItems((prev) =>
+      prev.map((it) =>
+        it._id === foodId
+          ? { ...it, commentsCount: (it.commentsCount ?? 0) + 1 }
+          : it
+      )
+    )
+  }
+
   return (
     <div className="reels-page">
       <div className="reels-feed" role="list">
-        {items.length === 0 && (
+        {localItems.length === 0 && (
           <div className="empty-state">
             <p>{emptyMessage}</p>
           </div>
         )}
 
-        {items.map((item) => (
+        {localItems.map((item) => (
           <section key={item._id} className="reel" role="listitem">
             <video
               ref={setVideoRef(item._id)}
@@ -86,12 +97,19 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
                 </div>
 
                 <div className="reel-action-group">
-                  <button className="reel-action" aria-label="Comments">
+                  <button
+                    className="reel-action"
+                    aria-label="Comments"
+                    onClick={() => setOpenCommentsFor(item._id)}
+                  >
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
                     </svg>
                   </button>
-                  <div className="reel-action__count">{item.commentsCount ?? (Array.isArray(item.comments) ? item.comments.length : 0)}</div>
+                  <div className="reel-action__count">
+                    {localItems.find((it) => it._id === item._id)?.commentsCount
+                      ?? (Array.isArray(item.comments) ? item.comments.length : 0)}
+                  </div>
                 </div>
               </div>
 
@@ -105,6 +123,14 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
           </section>
         ))}
       </div>
+
+      {openCommentsFor && (
+        <CommentSection
+          foodId={openCommentsFor}
+          onClose={() => setOpenCommentsFor(null)}
+          onCommentAdded={() => handleCommentAdded(openCommentsFor)}
+        />
+      )}
     </div>
   )
 }

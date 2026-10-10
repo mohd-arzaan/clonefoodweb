@@ -5,7 +5,7 @@ import '../styles/top-nav.css'
 const TopNav = () => {
   return (
     <nav className="top-nav">
-      <Link to="/" className="top-nav__logo">🍔 FoodApp</Link>
+      <Link to="/" className="top-nav__logo">foodarz</Link>
       <div className="top-nav__links">
         <Link to="/user/register">User Register</Link>
         <Link to="/food-partner/register">Partner Register</Link>
