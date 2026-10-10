@@ -1,6 +1,14 @@
 @import './theme.css';
 
 /* Page container ensures full viewport and background */
+.reel-container,
+.reel,
+.reel-item,
+.video-container {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
 .reels-page {
   height: 100dvh;
   background: var(--color-bg);
