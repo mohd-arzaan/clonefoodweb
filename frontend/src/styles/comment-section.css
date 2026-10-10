@@ -1,6 +1,9 @@
 .comment-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 65px;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -19,8 +22,8 @@
 .comment-sheet {
     width: 100%;
     max-width: 500px;
-    height: 70vh;
-    max-height: 600px;
+    height: 60vh;
+    max-height: 500px;
     background: #121216;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -41,6 +44,7 @@
     justify-content: space-between;
     padding: 16px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
 }
 
 .comment-header h3 {
@@ -137,6 +141,7 @@
     padding: 14px 16px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     background: #0a0a0c;
+    flex-shrink: 0;
 }
 
 .comment-form input {
